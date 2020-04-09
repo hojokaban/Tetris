@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="tetris.css">
 	<title>TETRIS</title>
 </head>
 <body>
+	<h1 class="title">テトリス</h1>
 	<canvas id="can"></canvas>
 	<script>
 
@@ -50,7 +53,7 @@
 		function init(){
 			for(let y=0; y<FIELD_ROW ; y++){
 				field[y] = [];
-				for(let x=0; x<FIELD_COL ; x++){
+				for(let x=0; x<FIELD_COL; x++){
 					field[y][x] = 0;
 				}
 			}
