@@ -10,6 +10,8 @@
 	<canvas id="can"></canvas>
 	<script>
 
+		const GAME_SPEED = 1000;
+
 		const FIELD_COL = 10;
 		const FIELD_ROW = 20;
 
@@ -43,9 +45,11 @@
 
 		init();
 
-			field[5][8] = 1;
+		field[5][8] = 1;
 
 		drawAll();
+
+		setInterval(dropTetro, GAME_SPEED);
 
 
 
@@ -97,10 +101,10 @@
 			if(ntetro == undefined) ntetro = tetro;
 			for(let y=0; y<TETRO_SIZE ; y++){
 				for(let x=0; x<TETRO_SIZE ; x++){
-					let nx = tetro_x + mx + x;
-					let ny = tetro_y + my + y;
 					if(ntetro[y][x]){
-						if(field[ny][nx] || ny < 0 || nx < 0 || ny>= FIELD_ROW || nx >= FIELD_COL){ 
+						let nx = tetro_x + mx + x;
+						let ny = tetro_y + my + y;
+						if(ny < 0 || nx < 0 || ny>= FIELD_ROW || nx >= FIELD_COL||field[ny][nx]){ 
 							return false;
 						}
 					}
@@ -119,6 +123,26 @@
 			}
 			return ntetro;
 
+		}
+
+		function fixTetro(){
+			for(let y=0; y<TETRO_SIZE ; y++){
+				for(let x=0; x<TETRO_SIZE ; x++){
+					if(tetro[y][x]){
+						field[tetro_y + y][tetro_x + x] = 1;
+					}
+				}
+			}
+		}
+
+		function dropTetro(){
+			if(checkMove(0,1)) tetro_y++;
+			else {
+				fixTetro();
+				tetro_x = 0;
+				tetro_y = 0;
+			}
+			drawAll();
 		}
 
 		document.onkeydown = function(e){
